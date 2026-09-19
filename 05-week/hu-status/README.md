@@ -5,7 +5,7 @@
 # Weekly Status Report – Week 05
 
 - FULL NAME: Edwin Meléndez Palomino
-- GITHUB USERNAME: [your GitHub username]
+- GITHUB USERNAME: emelendez20201-ship-it
 - TEAM: Futbolix
 - SPRINT OBJECTIVE: Complete the MVP documentation and define the project's technology foundation.
 

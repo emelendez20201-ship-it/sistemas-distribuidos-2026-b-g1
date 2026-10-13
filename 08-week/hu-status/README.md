@@ -37,3 +37,4 @@
 
 - Some planned UML diagrams are not yet implemented.
 - Authentication-related documentation still requires
+![Week 08 infographic](./week-08-infographic.png)

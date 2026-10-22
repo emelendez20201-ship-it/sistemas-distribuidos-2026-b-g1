@@ -8,38 +8,47 @@
 - FULL_NAME: Edwin Meléndez Palomino
 - GITHUB_USER: emelendez20201-ship-it
 - TEAM: Futbolix
-- SPRINT_GOAL: Make the reservation journey observable: trace map, structured log contract, instrumentation code and metric catalog (delivery 1 of the W11 workshop).
+- SPRINT_GOAL: Complete the individual observability workshop on the Futbolix reservation journey: trace context, structured logs, metrics, SLOs, alerts, runbook and incident drill.
 <!-- CONFIG-END -->
 
 ## 1. User stories worked this week
 | HU ID | Title | Status (todo/doing/done) | Evidence (PR or commit URL) |
 |---|---|---|---|
-| HU-NOT-001 | Receive Reservation Confirmation (observability workshop, CP0 to CP4) | doing | https://github.com/emelendez20201-ship-it/sistemas-distribuidos-2026-b-g1/tree/main/11-week/workshop |
+| HU-NOT-001 | Receive Reservation Confirmation (observability workshop, CP0 to CP10) | done | https://github.com/emelendez20201-ship-it/sistemas-distribuidos-2026-b-g1/tree/main/11-week/workshop |
 
 ## 2. My individual contribution
-- Mapped the journey reserve, pay and confirm across ftx-front, API Gateway, auth-service, reservation, payment and notifications, with the trace propagation of each hop (CP1).
-- Defined the structured log contract with domain fields, a never-log list and seven sample lines for one trace (CP2).
-- Added the trace-context middleware, the structured logger, downstream propagation, two metrics and an automated test (CP3).
-- Defined the golden signals and the metric catalog for reservation, API Gateway and payment (CP4).
+
+- Mapped the real reservation journey from ftx-docs: ftx-front, api-gateway, reservation-service, court-service and the ReservationCreated event consumed by payment-service.
+- Wrote the log contract (JSON fields, never-log list, seven lines of one trace) and the metric catalog for reservation-service, api-gateway and the court lookup.
+- Implemented a W3C traceparent propagation and structured logging prototype in Node.js, with 2 passing tests (`node --test`, pass 2, fail 0) in `03-instrumentation/`.
+- Defined three SLOs with error budgets from real data (4 courts, 16 slots per day) and stated assumptions, plus multi-window burn-rate alerts and an alert policy.
+- Wrote the runbook for the fast-burn alert and ran an incident drill with a blameless postmortem (court-service slow for 40 minutes, 3 actions).
+- Wrote the reflection document and the implementation plan for my project.
 
 ## 3. Blockers and risks
-- The endpoint paths in 01-journey.md still need to be checked against the OpenAPI files of ftx-docs.
-- HOW-TO-RUN.md and the reflection entries are still being completed.
-- Delivery 2 (CP6 to CP10) is pending.
+
+- ftx-front does not send `traceparent` yet (`src/api/client.ts` only sets Accept and Content-Type), so the trace would start at api-gateway.
+- Services are not in code yet (ADR-010 proposes choreography), so the instrumentation is a prototype, not integrated.
+- ftx-infra-mongo still provisions MongoDB for notifications, while ftx-docs removed the notification service. The team must decide its role.
+- Repository names (ftx-schedules-api, ftx-courts-db) differ from the service name court-service used in ftx-docs.
 
 ## 4. Plan for next week
-- Finish HOW-TO-RUN.md with the real console output.
-- Complete delivery 2: SLOs, alerts, runbook, incident and postmortem (CP6 to CP10).
+
+- Ask the team to add `traceparent` creation in ftx-front and propagation in api-gateway.
+- Agree with the tech lead on the role of ftx-infra-mongo given the removal of notifications.
+- Apply the log contract and the three SLOs to the services once they exist in code.
 
 ## 5. Compliance self-check
+
 - [x] Conventional Commits - `type(scope): summary`
 - [ ] Per-environment HU branch + PR to that environment (hu-xxx-dev -> develop, ...)
-- [ ] Testable acceptance criteria
+- [x] Testable acceptance criteria
 - [x] Tests added/updated (unit / integration)
 - [ ] DDD / hexagonal boundaries respected (domain has no I/O)
 - [x] No secrets; config via environment variables
 
 ## 6. Evidence links
+
 - Workshop folder: https://github.com/emelendez20201-ship-it/sistemas-distribuidos-2026-b-g1/tree/main/11-week/workshop
-- CP1 journey commit: https://github.com/emelendez20201-ship-it/sistemas-distribuidos-2026-b-g1/commit/e560b68
-- CP3 propagation and metrics commit: https://github.com/emelendez20201-ship-it/sistemas-distribuidos-2026-b-g1/commit/aa7bf8c
+- Runbook: https://github.com/emelendez20201-ship-it/sistemas-distribuidos-2026-b-g1/blob/main/11-week/workshop/07-runbook.md
+- Incident drill and postmortem: https://github.com/emelendez20201-ship-it/sistemas-distribuidos-2026-b-g1/blob/main/11-week/workshop/08-incident.md

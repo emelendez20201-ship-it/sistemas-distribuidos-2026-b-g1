@@ -1,0 +1,42 @@
+groups:
+  - name: reservation-availability-burn-rate
+    rules:
+      - alert: ReservationAvailabilityFastBurn
+        expr: |
+          (
+            sum(rate(reservation_requests_total{result!~"created|rejected"}[1h]))
+            / sum(rate(reservation_requests_total[1h]))
+            > (14.4 * 0.005)
+          )
+          and
+          (
+            sum(rate(reservation_requests_total{result!~"created|rejected"}[5m]))
+            / sum(rate(reservation_requests_total[5m]))
+            > (14.4 * 0.005)
+          )
+        labels:
+          severity: critical
+          team: futbolix
+        annotations:
+          summary: "Reservations are failing fast: the 30 day error budget burns at 14.4x"
+          runbook_url: "https://github.com/emelendez20201-ship-it/sistemas-distribuidos-2026-b-g1/blob/main/11-week/workshop/07-runbook.md"
+
+      - alert: ReservationAvailabilitySlowBurn
+        expr: |
+          (
+            sum(rate(reservation_requests_total{result!~"created|rejected"}[6h]))
+            / sum(rate(reservation_requests_total[6h]))
+            > (6 * 0.005)
+          )
+          and
+          (
+            sum(rate(reservation_requests_total{result!~"created|rejected"}[30m]))
+            / sum(rate(reservation_requests_total[30m]))
+            > (6 * 0.005)
+          )
+        labels:
+          severity: warning
+          team: futbolix
+        annotations:
+          summary: "Reservations are failing slowly: the 30 day error budget burns at 6x"
+          runbook_url: "https://github.com/emelendez20201-ship-it/sistemas-distribuidos-2026-b-g1/blob/main/11-week/workshop/07-runbook.md"

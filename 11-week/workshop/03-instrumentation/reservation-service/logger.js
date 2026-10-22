@@ -1,7 +1,7 @@
 'use strict';
 
 const BASE = {
-  service: 'reservation',
+  service: 'reservation-service',
   version: process.env.SERVICE_VERSION || '2.0.0',
   environment: process.env.APP_ENV || 'dev',
 };

@@ -24,8 +24,26 @@ security.yml runs on every pull request with three gates:
 
 If one step fails, the pull request is blocked and the story stays open.
 
+## Evidence of the run
+
+Negative test run on 2026-10-30 (Windows 11, Temurin JDK 21.0.13, Maven 3.9.16, Spring Boot 3.3.5):
+
+```
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  15.227 s
+[INFO] Finished at: 2026-10-30T18:34:02-05:00
+```
+
+Result: the invalid X-Event-Checksum gets 401 and the handler is never called (verify never()).
+
+Workflow validation: security.yml checked with yamllint.com on 2026-10-30, result: Valid YAML.
+
 ## Notes
 
 - This workflow is a proposal for the team pipeline. It lives in my fork, not in the team code repository.
-- The class names WompiWebhookController, WompiSignatureVerifier and WebhookHandler follow the example in
-  00-governance/security-rules.md and must be adapted to the real names when payment-service exists.
+- The test was run in a small local project (payment-webhook-demo) that reproduces the controller, the signature
+  verifier and the handler, because payment-service does not exist in the team repository yet.

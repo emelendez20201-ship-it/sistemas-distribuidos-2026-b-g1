@@ -19,7 +19,10 @@
 | Date | Hours | Chapters or labs | Evidence file |
 |---|---|---|---|
 | 2026-11-01 | 1 | Enrollment, chapter 1 (in progress) | evidence/00-enrollment.png |
-| Total | 1 | | |
+| 2026-11-07 | 2 | Chapter 1 | evidence/01-chapter-01.png |
+| 2026-11-08 | 1 | Chapter 2 | evidence/02-chapter-02.png |
+| 2026-11-09 | 2 | Chapters 3, 4 and 5 | evidence/03-chapter-03.png, evidence/04-chapter-04.png, evidence/05-chapter-05.png |
+| Total | 6 | | |
 
 ## Labs
 

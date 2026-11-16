@@ -1,37 +1,47 @@
-# Weekly HU status — Week 15 (Nov 9 – Nov 15, 2026)
+<!-- HU-STATUS TEMPLATE - do NOT remove the <!-- ... --> markers or the table headers.
+     Your weekly grade is read AUTOMATICALLY from this file:
+       15-week/hu-status/README.md  (inside YOUR fork). English. -->
 
-**Author:** Edwin Meléndez Palomino (`emelendez20201-ship-it`)
-**Team:** Futbolix, group 1 · **Area:** infrastructure and schedules
-**Release:** MVP 3 (`v3.0.0`)
+# Weekly Status - Week 15
 
-> Adapt the headings to the template used in previous weeks if it differs.
+<!-- CONFIG-START - must match your profile repo (username/username) CONFIG -->
+- FULL_NAME: Edwin Meléndez Palomino
+- GITHUB_USER: emelendez20201-ship-it
+- TEAM: Futbolix
+- SPRINT_GOAL: Integrate and operate MVP 3: bring up the complete platform, run the end-to-end demo with injected failures, and document the runbooks for the schedules domain and PostgreSQL.
+<!-- CONFIG-END -->
 
-## HU worked this week
-
-| HU | Repository | Work | Status |
+## 1. User stories worked this week
+| HU ID | Title | Status (todo/doing/done) | Evidence (PR or commit URL) |
 |---|---|---|---|
-| HU-ADM-001 | `ftx-schedules-api` | Court schedule domain, bookable-slots rules, schedules schema access and calls to `ftx-courts-api` (PRs #2–#5, stacked) | Reviewed and approved; merge pending (no write access) |
-| HU-ADM-001 | `ftx-schedules-db` | Network name fix for the platform (PR #6) | Open, owned by a teammate |
-| Infra | `ftx-infra-postgres` | Shared PostgreSQL instance and roles; validation of PRs #12 and #13 | Review requested; validation on real Docker pending |
-| Docs | `ftx-docs` | Runbooks RB-001 (PostgreSQL unavailable) and RB-002 (`ftx-schedules-api`) plus demo evidence (PR #69) | Open, review requested |
+| HU-ADM-001 | Court schedules: domain, bookable slots and schedules API (reviewed and approved, stacked PRs 1 to 4) | doing | https://github.com/code-corhuila/ftx-schedules-api/pull/2 |
 
-## What was delivered
+## 2. My individual contribution
+- Brought up the complete platform on my machine with ftx-workflow (PostgreSQL, RabbitMQ, four Flyway migrations, four APIs and the gateway) and ran the end-to-end demo with injected failures: 20 PASS / 0 FAIL.
+- Rehearsed the PostgreSQL outage: while it is down ftx-schedules-api answers 503 in about 2 s, and after it returns it answers 200 again without restarting the API.
+- Fixed the ftx-customers-api startup problem (the JWT private key must be one-line PKCS#8 base64) so the platform could start.
+- Wrote and published runbooks RB-001 (PostgreSQL unavailable, with the rehearsal evidence) and RB-002 (ftx-schedules-api) and added the demo transcript to ftx-docs (PR #69).
+- Reviewed and approved ftx-schedules-api PRs #2 to #5 (HU-ADM-001), and recorded the demo video with the failure path.
 
-- Brought up the complete platform on my machine with `ftx-workflow`: PostgreSQL, RabbitMQ, four migrations, four APIs and the gateway.
-- Ran the end-to-end demo with injected failures: **20 PASS / 0 FAIL** (`demo-output-20261115-172716.txt`).
-- Failure rehearsal: with PostgreSQL stopped, schedules answers **503 in about 2 s**; after it returns it answers **200 again without restarting the API**.
-- Recorded the demo video (5 scenes, including the failure path).
-- Fixed the `ftx-customers-api` startup problem (JWT private key must be one-line PKCS#8 base64).
+## 3. Blockers and risks
+- I have no write access to ftx-schedules-api, so the merge of PRs #2 to #5 depends on a teammate; I asked for them to be merged in order with a merge commit.
+- Promotion to qa and main, and the v3.0.0 tag, need the teacher's approval before the deadline.
+- GitHub Actions is blocked by the organization billing, so checks were run locally.
 
-## Evidence
+## 4. Plan for next week
+- Promote ftx-schedules-api and ftx-schedules-db through qa and a release branch to main and tag v3.0.0.
+- Validate infra PR #13 (ftx-infra-postgres) on a real Docker engine and report on PR #12.
+- Check the CODEOWNERS handle in ftx-schedules-api.
 
-- PR #69 in `ftx-docs`: runbooks and demo transcript.
+## 5. Compliance self-check
+- [x] Conventional Commits - `type(scope): summary`
+- [ ] Per-environment HU branch + PR to that environment (hu-xxx-dev -> develop, ...)
+- [x] Testable acceptance criteria
+- [ ] Tests added/updated (unit / integration)
+- [x] DDD / hexagonal boundaries respected (domain has no I/O)
+- [x] No secrets; config via environment variables
+
+## 6. Evidence links
+- Runbooks and demo transcript: https://github.com/code-corhuila/ftx-docs/pull/69
 - Demo video: https://drive.google.com/file/d/1K_BMUNiHh3nW5tkY-iYpUWs3uGiyzHGr/view?usp=sharing
-- Approvals with comments on `ftx-schedules-api` PRs #2–#5.
-
-## Blockers and next steps
-
-- No write access to `ftx-schedules-api`: asked a teammate to merge #2 → #3 → #4 → #5 with a merge commit, deleting each branch after merging.
-- Promote `ftx-schedules-api` and `ftx-schedules-db` through `qa` and a release branch to `main` and tag `v3.0.0` (needs the teacher's approval).
-- Validate infra PR #13 on a real Docker engine and report on PR #12.
-- Check the `CODEOWNERS` handle in `ftx-schedules-api` before requesting approval for `main`.
+- Schedules API PRs reviewed: https://github.com/code-corhuila/ftx-schedules-api/pull/2, /3, /4 and /5

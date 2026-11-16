@@ -1,37 +1,37 @@
-<!-- HU-STATUS TEMPLATE - do NOT remove the <!-- ... --> markers or the table headers.
-     Your weekly grade is read AUTOMATICALLY from this file:
-       15-week/hu-status/README.md  (inside YOUR fork). English. -->
+# Weekly HU status — Week 15 (Nov 9 – Nov 15, 2026)
 
-# Weekly Status - Week 15
+**Author:** Edwin Meléndez Palomino (`emelendez20201-ship-it`)
+**Team:** Futbolix, group 1 · **Area:** infrastructure and schedules
+**Release:** MVP 3 (`v3.0.0`)
 
-<!-- CONFIG-START - must match your profile repo (username/username) CONFIG -->
-- FULL_NAME:
-- GITHUB_USER:
-- TEAM:
-- SPRINT_GOAL:
-<!-- CONFIG-END -->
+> Adapt the headings to the template used in previous weeks if it differs.
 
-## 1. User stories worked this week
-| HU ID | Title | Status (todo/doing/done) | Evidence (PR or commit URL) |
+## HU worked this week
+
+| HU | Repository | Work | Status |
 |---|---|---|---|
-| HU-XXX-001 |  |  |  |
+| HU-ADM-001 | `ftx-schedules-api` | Court schedule domain, bookable-slots rules, schedules schema access and calls to `ftx-courts-api` (PRs #2–#5, stacked) | Reviewed and approved; merge pending (no write access) |
+| HU-ADM-001 | `ftx-schedules-db` | Network name fix for the platform (PR #6) | Open, owned by a teammate |
+| Infra | `ftx-infra-postgres` | Shared PostgreSQL instance and roles; validation of PRs #12 and #13 | Review requested; validation on real Docker pending |
+| Docs | `ftx-docs` | Runbooks RB-001 (PostgreSQL unavailable) and RB-002 (`ftx-schedules-api`) plus demo evidence (PR #69) | Open, review requested |
 
-## 2. My individual contribution
--
+## What was delivered
 
-## 3. Blockers and risks
--
+- Brought up the complete platform on my machine with `ftx-workflow`: PostgreSQL, RabbitMQ, four migrations, four APIs and the gateway.
+- Ran the end-to-end demo with injected failures: **20 PASS / 0 FAIL** (`demo-output-20261115-172716.txt`).
+- Failure rehearsal: with PostgreSQL stopped, schedules answers **503 in about 2 s**; after it returns it answers **200 again without restarting the API**.
+- Recorded the demo video (5 scenes, including the failure path).
+- Fixed the `ftx-customers-api` startup problem (JWT private key must be one-line PKCS#8 base64).
 
-## 4. Plan for next week
--
+## Evidence
 
-## 5. Compliance self-check
-- [ ] Conventional Commits - `type(scope): summary`
-- [ ] Per-environment HU branch + PR to that environment (hu-xxx-dev -> develop, ...)
-- [ ] Testable acceptance criteria
-- [ ] Tests added/updated (unit / integration)
-- [ ] DDD / hexagonal boundaries respected (domain has no I/O)
-- [ ] No secrets; config via environment variables
+- PR #69 in `ftx-docs`: runbooks and demo transcript.
+- Demo video: https://drive.google.com/file/d/1K_BMUNiHh3nW5tkY-iYpUWs3uGiyzHGr/view?usp=sharing
+- Approvals with comments on `ftx-schedules-api` PRs #2–#5.
 
-## 6. Evidence links
--
+## Blockers and next steps
+
+- No write access to `ftx-schedules-api`: asked a teammate to merge #2 → #3 → #4 → #5 with a merge commit, deleting each branch after merging.
+- Promote `ftx-schedules-api` and `ftx-schedules-db` through `qa` and a release branch to `main` and tag `v3.0.0` (needs the teacher's approval).
+- Validate infra PR #13 on a real Docker engine and report on PR #12.
+- Check the `CODEOWNERS` handle in `ftx-schedules-api` before requesting approval for `main`.
